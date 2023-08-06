@@ -11,8 +11,11 @@ import {
 	Stack,
 } from "@chakra-ui/react";
 import { Link, Link as RouterLink } from "react-router-dom";
+import { UserState } from "../context/UserProvider";
 
 const ActivePlan = () => {
+	const { plan, devices, price, billing } = UserState();
+
 	return (
 		<Box
 			backgroundColor="#26528C"
@@ -29,14 +32,22 @@ const ActivePlan = () => {
 						<HStack>
 							<Heading>Current Plan Details</Heading>
 							<Button>Active</Button>
-							<Button>Cancel</Button>
+							<Link
+								as={RouterLink}
+								to="/cancel"
+								color="#0969da"
+								_hover={{ textDecoration: "underline" }}>
+								Cancel
+							</Link>
 						</HStack>
 					</CardHeader>
 					<CardBody>
 						<Stack display="block">
-							<Box paddingBottom="0">Basic</Box>
-							<Box>Phone+Tablet</Box>
-							<Heading>$2,000/mo</Heading>
+							<Box paddingBottom="0">{plan}</Box>
+							<Box>{devices}</Box>
+							<Heading>
+								${price}/{billing === "Monthly" ? "mo" : "yr"}
+							</Heading>
 							<Button>
 								<Link
 									as={RouterLink}
