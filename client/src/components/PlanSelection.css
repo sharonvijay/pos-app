@@ -1,0 +1,33 @@
+.toggle-button {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 12px;
+  padding: 60px 35px;
+  background-color: #97b2d4; /* Updated background color */
+  color: white;
+  font-weight: 700;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+  background-color: #26528C;
+}
+
+.triangle {
+  content: "";
+  position: absolute;
+  left: 50%;
+  margin-left: -10px;
+  bottom: -10px;
+  border-style: solid;
+  border-width: 10px 12.5px 0 12.5px;
+  border-color: transparent transparent transparent transparent;
+}
+
+.toggle-button.open .triangle {
+  border-color: #26528C transparent transparent transparent;
+  background-color: #26528C;
+}
