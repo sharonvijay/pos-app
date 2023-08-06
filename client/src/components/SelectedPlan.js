@@ -10,7 +10,6 @@ import {
 	Heading,
 	Stack,
 	Text,
-	Textarea,
 } from "@chakra-ui/react";
 import { Link, Link as RouterLink } from "react-router-dom";
 import { UserState } from "../context/UserProvider";
