@@ -1,0 +1,14 @@
+[[redirects]]
+  from = "/active"
+  to = "/active"
+  status = 200
+
+[[redirects]]
+  from = "/cancel"
+  to = "/cancel"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
