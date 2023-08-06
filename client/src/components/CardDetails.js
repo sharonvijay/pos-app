@@ -80,6 +80,13 @@ const CardDetails = () => {
 		}
 	};
 
+	const handlesubmitdummy = async (e) => {
+		e.preventDefault();
+		alert("Payment Successfull");
+
+		navigate("/active");
+	};
+
 	return (
 		<Box
 			backgroundColor="#26528C"
@@ -110,7 +117,7 @@ const CardDetails = () => {
 								bg="#26528C"
 								color="white"
 								_hover={{ bg: "green", color: "white" }}
-								onClick={handlePayment}>
+								onClick={handlesubmitdummy}>
 								Confirm Payment
 							</Button>
 						</Box>
@@ -128,7 +135,7 @@ const CardDetails = () => {
 										<Td>Billing Cycle</Td> <Td>{billing}</Td>
 									</Tr>
 									<Tr>
-										<Td>Plan Price</Td>{" "}
+										<Td>Plan Price</Td>
 										<Td>
 											{price}/{billing}
 										</Td>

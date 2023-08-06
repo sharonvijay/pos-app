@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import Stripe from "stripe";
 import connectDB from "./config/db.js";
@@ -28,7 +29,7 @@ connectDB()
 		console.error(`Failed to connect to MongoDB: ${error.message}`);
 		process.exit(1);
 	});
-
+app.use(cors());
 app.use("/api/user", userRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/plan", planRoutes);
