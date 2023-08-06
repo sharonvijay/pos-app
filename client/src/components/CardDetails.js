@@ -24,7 +24,7 @@ const CardDetails = () => {
 	const navigate = useNavigate();
 
 	const { user, userName, userEmail, billing, plan, price } = UserState();
-	const duration = billing === "Monthly" ? "month" : "year";
+	// const duration = billing === "Monthly" ? "month" : "year";
 	console.log(userName);
 	console.log(userEmail);
 	console.log(user);
