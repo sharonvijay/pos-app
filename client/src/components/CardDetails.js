@@ -10,17 +10,17 @@ import {
 	HStack,
 	Button,
 	Tbody,
-	Alert,
 } from "@chakra-ui/react";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import axios from "axios";
+// import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { CardElement } from "@stripe/react-stripe-js";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserState } from "../context/UserProvider";
 
 const CardDetails = () => {
 	// const [success, setSuccess] = useState(false);
-	const stripe = useStripe();
-	const elements = useElements();
+	// const stripe = useStripe();
+	// const elements = useElements();
 	const navigate = useNavigate();
 
 	const { user, userName, userEmail, billing, plan, price } = UserState();
@@ -48,37 +48,37 @@ const CardDetails = () => {
 	// 	fetchPlanPrice();
 	// });
 
-	const handlePayment = async () => {
-		try {
-			const paymentMethod = await stripe.createPaymentMethod({
-				card: elements.getElement("card"),
-				type: "card",
-			});
-			const response = await axios.post("/api/payment", {
-				// amount: price,
-				username: userName,
-				email: userEmail,
-				paymentMethod: paymentMethod.paymentMethod.id,
-				// billing: duration,
-			});
+	// const handlePayment = async () => {
+	// 	try {
+	// 		const paymentMethod = await stripe.createPaymentMethod({
+	// 			card: elements.getElement("card"),
+	// 			type: "card",
+	// 		});
+	// 		const response = await axios.post("/api/payment", {
+	// 			// amount: price,
+	// 			username: userName,
+	// 			email: userEmail,
+	// 			paymentMethod: paymentMethod.paymentMethod.id,
+	// 			// billing: duration,
+	// 		});
 
-			if (!response.ok) {
-				return Alert("Payment UnSuccessful");
-			}
+	// 		if (!response.ok) {
+	// 			return Alert("Payment UnSuccessful");
+	// 		}
 
-			// const data = await response.json();
-			// const confirm = await stripe.confirmCardPayment(data.clientSecret);
+	// 		// const data = await response.json();
+	// 		// const confirm = await stripe.confirmCardPayment(data.clientSecret);
 
-			if (response.data.status === 200) {
-				console.log("Successful payment");
-				navigate("/active");
+	// 		if (response.data.status === 200) {
+	// 			console.log("Successful payment");
+	// 			navigate("/active");
 
-				// setSuccess(true);
-			}
-		} catch (error) {
-			console.log("Error", error);
-		}
-	};
+	// 			// setSuccess(true);
+	// 		}
+	// 	} catch (error) {
+	// 		console.log("Error", error);
+	// 	}
+	// };
 
 	const handlesubmitdummy = async (e) => {
 		e.preventDefault();
