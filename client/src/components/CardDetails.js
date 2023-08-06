@@ -50,10 +50,8 @@ const CardDetails = () => {
 	const checkoutOptions = {
 		lineItems: [items],
 		mode: "subscription",
-		// successUrl: `${window.location.origin}/active`,
-		successUrl: `/active`,
-		// cancelUrl: `${window.location.origin}/cancel`,
-		cancelUrl: `/cancel`,
+		successUrl: `${window.location.origin}/active`,
+		cancelUrl: `${window.location.origin}/cancel`,
 	};
 
 	const redirectToCheckout = async () => {
