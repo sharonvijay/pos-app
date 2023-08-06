@@ -18,7 +18,7 @@ const plandata = asyncHandler(async (req, res) => {
 			name: planData.name,
 			payid: planData.payid,
 			price: planData.price,
-			quality: planData.quality,
+			videoquality: planData.videoquality,
 			resolution: planData.resolution,
 			devices: planData.devices,
 		});
