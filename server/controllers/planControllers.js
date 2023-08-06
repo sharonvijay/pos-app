@@ -14,14 +14,7 @@ const plandata = asyncHandler(async (req, res) => {
 		if (!planData) {
 			return res.status(404).json({ message: "Plan not found" });
 		}
-		res.json({
-			name: planData.name,
-			payid: planData.payid,
-			price: planData.price,
-			videoquality: planData.videoquality,
-			resolution: planData.resolution,
-			devices: planData.devices,
-		});
+		res.json(planData);
 	} catch (error) {
 		console.error("Error fetching plan price:", error);
 		res.status(500).json({ error: "Failed to fetch plan price" });
