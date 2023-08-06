@@ -51,7 +51,7 @@ const CardDetails = () => {
 		lineItems: [items],
 		mode: "subscription",
 		successUrl: "https://sharon-pos-app.netlify.app/active",
-		cancelUrl: "https://sharon-pos-app.netlify.app/active/cancel",
+		cancelUrl: "https://sharon-pos-app.netlify.app/cancel",
 	};
 
 	const redirectToCheckout = async () => {
