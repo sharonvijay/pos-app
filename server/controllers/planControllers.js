@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import MonthPlan from "../models/monthPlan.js";
 import YearPlan from "../models/yearPlan.js";
-const planprice = asyncHandler(async (req, res) => {
+const plandata = asyncHandler(async (req, res) => {
 	const { planName, billingCycle } = req.query;
 
 	try {
@@ -15,7 +15,12 @@ const planprice = asyncHandler(async (req, res) => {
 			return res.status(404).json({ message: "Plan not found" });
 		}
 		res.json({
+			name: planData.name,
+			payid: planData.payid,
 			price: planData.price,
+			quality: planData.quality,
+			resolution: planData.resolution,
+			devices: planData.devices,
 		});
 	} catch (error) {
 		console.error("Error fetching plan price:", error);
@@ -23,4 +28,4 @@ const planprice = asyncHandler(async (req, res) => {
 	}
 });
 
-export { planprice };
+export { plandata };

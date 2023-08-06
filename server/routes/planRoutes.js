@@ -1,7 +1,7 @@
 import express from "express";
-import { planprice } from "../controllers/planControllers.js";
+import { plandata } from "../controllers/planControllers.js";
 const router = express.Router();
 
-router.get("/plan-price", planprice);
+router.get("/", plandata);
 
 export default router;
