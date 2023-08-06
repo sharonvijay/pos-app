@@ -17,7 +17,7 @@ import axios from "axios";
 import { UserState } from "../context/UserProvider";
 
 const CardDetails = () => {
-	const [stripeError, setStripeError] = useState(null);
+	// const [stripeError, setStripeError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const stripe = useStripe();
 
@@ -61,7 +61,7 @@ const CardDetails = () => {
 		console.log("Stripe Checkout Error" + error);
 
 		if (error) {
-			setStripeError(error.message);
+			alert(error.message);
 		}
 		setLoading(false);
 	};
