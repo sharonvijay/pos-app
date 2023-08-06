@@ -37,8 +37,8 @@ const Register = () => {
 				},
 			};
 			const { data } = await axios.post(
-				// "https://pose-app-server.onrender.com/api/user",
-				"/api/user",
+				"https://pose-app-server.onrender.com/api/user",
+				// "/api/user",
 				{
 					name,
 					email,

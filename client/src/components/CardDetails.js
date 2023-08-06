@@ -26,9 +26,13 @@ const CardDetails = () => {
 	useEffect(() => {
 		const fetchPlanPrice = async () => {
 			try {
-				const response = await axios.get("/api/plan", {
-					params: { planName: plan, billingCycle: billing },
-				});
+				const response = await axios.get(
+					// "/api/plan",
+					"https://pose-app-server.onrender.com/api/plan",
+					{
+						params: { planName: plan, billingCycle: billing },
+					}
+				);
 				setPriceId(response.data.priceid);
 			} catch (error) {
 				console.error("Error fetching plan price:", error);
