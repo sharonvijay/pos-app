@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
 	Box,
 	Heading,
@@ -11,80 +11,55 @@ import {
 	Button,
 	Tbody,
 } from "@chakra-ui/react";
-// import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { CardElement } from "@stripe/react-stripe-js";
-// import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { CardElement, useStripe } from "@stripe/react-stripe-js";
+// import { CardElement } from "@stripe/react-stripe-js";
+import axios from "axios";
 import { UserState } from "../context/UserProvider";
 
 const CardDetails = () => {
-	// const [success, setSuccess] = useState(false);
-	// const stripe = useStripe();
-	// const elements = useElements();
-	const navigate = useNavigate();
+	const [stripeError, setStripeError] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const stripe = useStripe();
 
-	const { user, userName, userEmail, billing, plan, price } = UserState();
-	// const duration = billing === "Monthly" ? "month" : "year";
-	console.log(userName);
-	console.log(userEmail);
-	console.log(user);
-	console.log(billing);
-	console.log(plan);
-	console.log(price);
-	// const [planPrice, setPlanPrice] = useState(0);
+	const { billing, plan, price, priceId, setPriceId } = UserState();
 
-	// useEffect(() => {
-	// 	const fetchPlanPrice = async () => {
-	// 		try {
-	// 			const response = await axios.get("/api/plan/plan-price", {
-	// 				params: { planName: plan, billingCycle: billing },
-	// 			});
-	// 			setPlanPrice(response.data.price);
-	// 		} catch (error) {
-	// 			console.error("Error fetching plan price:", error);
-	// 		}
-	// 	};
+	useEffect(() => {
+		const fetchPlanPrice = async () => {
+			try {
+				const response = await axios.get("/api/plan", {
+					params: { planName: plan, billingCycle: billing },
+				});
+				setPriceId(response.data.priceid);
+			} catch (error) {
+				console.error("Error fetching plan price:", error);
+			}
+		};
 
-	// 	fetchPlanPrice();
-	// });
+		fetchPlanPrice();
+	});
 
-	// const handlePayment = async () => {
-	// 	try {
-	// 		const paymentMethod = await stripe.createPaymentMethod({
-	// 			card: elements.getElement("card"),
-	// 			type: "card",
-	// 		});
-	// 		const response = await axios.post("/api/payment", {
-	// 			// amount: price,
-	// 			username: userName,
-	// 			email: userEmail,
-	// 			paymentMethod: paymentMethod.paymentMethod.id,
-	// 			// billing: duration,
-	// 		});
+	const items = {
+		price: priceId,
+		quantity: 1,
+	};
 
-	// 		if (!response.ok) {
-	// 			return Alert("Payment UnSuccessful");
-	// 		}
+	const checkoutOptions = {
+		lineItems: [items],
+		mode: "subscription",
+		successUrl: `${window.location.origin}/active`,
+		cancelUrl: `${window.location.origin}/cancel`,
+	};
 
-	// 		// const data = await response.json();
-	// 		// const confirm = await stripe.confirmCardPayment(data.clientSecret);
+	const redirectToCheckout = async () => {
+		setLoading(true);
+		console.log("Redirect To CheckOut");
+		const { error } = await stripe.redirectToCheckout(checkoutOptions);
+		console.log("Stripe Checkout Error" + error);
 
-	// 		if (response.data.status === 200) {
-	// 			console.log("Successful payment");
-	// 			navigate("/active");
-
-	// 			// setSuccess(true);
-	// 		}
-	// 	} catch (error) {
-	// 		console.log("Error", error);
-	// 	}
-	// };
-
-	const handlesubmitdummy = async (e) => {
-		e.preventDefault();
-		alert("Payment Successfull");
-
-		navigate("/active");
+		if (error) {
+			setStripeError(error.message);
+		}
+		setLoading(false);
 	};
 
 	return (
@@ -117,7 +92,8 @@ const CardDetails = () => {
 								bg="#26528C"
 								color="white"
 								_hover={{ bg: "green", color: "white" }}
-								onClick={handlesubmitdummy}>
+								onClick={redirectToCheckout}
+								disabled={loading}>
 								Confirm Payment
 							</Button>
 						</Box>

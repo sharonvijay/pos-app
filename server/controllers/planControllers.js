@@ -26,9 +26,6 @@ const plandata = asyncHandler(async (req, res) => {
 			return res.status(404).json({ message: "Plan not found" });
 		}
 
-		const devicesArray = planData.devices.split("+");
-		planData.devices = devicesArray;
-
 		console.log("Sending plan data in response:", planData);
 
 		res.json(planData);

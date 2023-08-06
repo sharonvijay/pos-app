@@ -3,16 +3,17 @@ import { createContext, useContext, useState } from "react";
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-	const [user, setUser] = useState("");
-	const [userName, setUserName] = useState("");
-	const [userEmail, setUserEmail] = useState("");
-	const [plan, setPlan] = useState("");
-	const [videoQuality, setVideoQuality] = useState("");
-	const [resolution, setResolution] = useState("");
+	const [user, setUser] = useState(""); //Login
+	const [userName, setUserName] = useState(""); //Login
+	const [userEmail, setUserEmail] = useState(""); //Login
+	const [plan, setPlan] = useState(""); //PlanSelection
+	const [videoQuality, setVideoQuality] = useState(""); //PlanSelection
+	const [resolution, setResolution] = useState(""); //PlanSelection
 	const [planActive, setPlanActive] = useState(false);
-	const [price, setPrice] = useState(0);
-	const [billing, setBilling] = useState("Monthly");
-	const [devices, setDevices] = useState("Monthly");
+	const [price, setPrice] = useState(0); //PlanSelection
+	const [priceId, setPriceId] = useState(0);
+	const [billing, setBilling] = useState("Monthly"); //PlanSelection
+	const [devices, setDevices] = useState(""); //PlanSelection
 
 	// useEffect(() => {
 	// 	setUser(user._id);
@@ -42,6 +43,8 @@ const UserProvider = ({ children }) => {
 				setUserName,
 				userEmail,
 				setUserEmail,
+				priceId,
+				setPriceId,
 			}}>
 			{children}
 		</UserContext.Provider>

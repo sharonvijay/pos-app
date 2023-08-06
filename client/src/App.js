@@ -17,7 +17,6 @@ function App() {
 			<Route path="/dashboard" element={<PlanSelection />} />
 			<Route path="/carddetails" element={<StripeContainer />} />
 			<Route path="/selectedplan" element={<SelectedPlan />} />
-			<Route path="/payment" element={<StripeContainer />} />
 			<Route path="/active" element={<ActivePlan />} />
 			<Route path="/cancel" element={<CancelPlan />} />
 		</Routes>

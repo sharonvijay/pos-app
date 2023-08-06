@@ -41,7 +41,8 @@ const Login = () => {
 			};
 
 			const response = await axios.post(
-				"https://pose-app-server.onrender.com/api/user/login",
+				// "https://pose-app-server.onrender.com/api/user/login",
+				"/api/user/login",
 				{ email, password },
 				config
 			);
