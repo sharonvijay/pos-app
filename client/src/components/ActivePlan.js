@@ -15,7 +15,17 @@ import { UserState } from "../context/UserProvider";
 
 const ActivePlan = () => {
 	const { plan, devices, price, billing } = UserState();
-
+	const currentDate = new Date();
+	const startDate = new Date(currentDate);
+	const autoRenewDate = new Date(currentDate);
+	autoRenewDate.setMonth(autoRenewDate.getMonth() + 1);
+	// Format the dates as strings
+	const options = { year: "numeric", month: "long", day: "numeric" };
+	const formattedStartDate = startDate.toLocaleDateString("en-US", options);
+	const formattedAutoRenewDate = autoRenewDate.toLocaleDateString(
+		"en-US",
+		options
+	);
 	return (
 		<Box
 			backgroundColor="#26528C"
@@ -26,19 +36,29 @@ const ActivePlan = () => {
 			display="flex"
 			justifyContent="center"
 			alignItems="center">
-			<Box borderRadius="18">
+			<Box maxW="700px" borderRadius="18px">
 				<Card>
 					<CardHeader>
-						<HStack>
+						<HStack spacing={4}>
 							<Heading>Current Plan Details</Heading>
-							<Button>Active</Button>
-							<Link
-								as={RouterLink}
-								to="/cancel"
-								color="#0969da"
-								_hover={{ textDecoration: "underline" }}>
-								Cancel
-							</Link>
+							<HStack spacing={3}>
+								<Box
+									borderRadius="3"
+									paddingLeft="2"
+									paddingRight="2"
+									paddingTop="1"
+									paddingBottom="1"
+									backgroundColor="#ADD8E6"
+									color="#0969da"
+									fontWeight="bold">
+									Active
+								</Box>
+								<Button backgroundColor="white" color="blue">
+									<Link as={RouterLink} to="/cancel">
+										Cancel
+									</Link>
+								</Button>
+							</HStack>
 						</HStack>
 					</CardHeader>
 					<CardBody>
@@ -46,23 +66,26 @@ const ActivePlan = () => {
 							<Box paddingBottom="0">{plan}</Box>
 							<Box>{devices}</Box>
 							<Heading>
-								${price}/{billing === "Monthly" ? "mo" : "yr"}
+								&#8377;{price}/{billing === "Monthly" ? "mo" : "yr"}
 							</Heading>
-							<Button>
-								<Link
-									as={RouterLink}
-									to="/dashboard"
-									color="#0969da"
-									_hover={{ textDecoration: "underline" }}>
-									Change Plan
-								</Link>
-							</Button>
+							<Box
+								marginTop="6"
+								borderColor="#0969da"
+								borderWidth="1px"
+								borderRadius="5px"
+								display="inline-block">
+								<Button backgroundColor="white" color="#0969da">
+									<Link as={RouterLink} to="/dashboard">
+										Choose Plan
+									</Link>
+								</Button>
+							</Box>
 						</Stack>
 					</CardBody>
 					<CardFooter>
 						<Box backgroundColor="#CCCC" padding="2" borderRadius="3">
-							You subscription has started on Aug 5th,2023 and will auto renew
-							on Sept 5th,2023
+							Your subscription has started on {formattedStartDate} and will
+							auto renew on {formattedAutoRenewDate}
 						</Box>
 					</CardFooter>
 				</Card>
