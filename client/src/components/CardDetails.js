@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	Box,
 	Heading,
@@ -22,15 +23,25 @@ const CardDetails = () => {
 	const stripe = useStripe();
 
 	const { billing, plan, price, priceId, setPriceId } = UserState();
-
+	const navigate = useNavigate();
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (!token) {
+			navigate("/");
+		}
+	}, [navigate]);
 	useEffect(() => {
 		const fetchPlanPrice = async () => {
 			try {
+				const token = localStorage.getItem("token");
 				const response = await axios.get(
 					// "/api/plan",
 					"https://pose-app-server.onrender.com/api/plan",
 					{
 						params: { planName: plan, billingCycle: billing },
+						headers: {
+							Authorization: `Bearer ${token}`, // Include the token in the headers
+						},
 					}
 				);
 				setPriceId(response.data.priceid);
@@ -51,6 +62,8 @@ const CardDetails = () => {
 		lineItems: [items],
 		mode: "subscription",
 		successUrl: "https://sharon-pos-app.netlify.app/active",
+		// successUrl: `${window.location.origin}/active`,
+		// cancelUrl: `${window.location.origin}/cancel`,
 		cancelUrl: "https://sharon-pos-app.netlify.app/cancel",
 	};
 
