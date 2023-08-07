@@ -1,16 +1,28 @@
 import React, { useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import axios from "axios";
-import { Box, Heading, Center, useToast, Link, Text } from "@chakra-ui/react";
+import {
+	Box,
+	Heading,
+	Center,
+	useToast,
+	Link,
+	Text,
+	Checkbox,
+} from "@chakra-ui/react";
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Stack, VStack, HStack } from "@chakra-ui/layout";
+import { UserState } from "../context/UserProvider";
+
 const Register = () => {
 	const [name, setName] = useState();
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
 	const [loading, setLoading] = useState(false);
+	const [rememberMe, setRememberMe] = useState(false);
+	const { setUser, setUserName, setUserEmail } = UserState();
 
 	const toast = useToast();
 	const navigate = useNavigate();
@@ -36,7 +48,7 @@ const Register = () => {
 					"Content-type": "application/json",
 				},
 			};
-			const { data } = await axios.post(
+			const response = await axios.post(
 				"https://pose-app-server.onrender.com/api/user",
 				// "/api/user",
 				{
@@ -46,16 +58,36 @@ const Register = () => {
 				},
 				config
 			);
-			console.log(data);
-			toast({
-				title: "Registration Successful",
-				status: "success",
-				duration: 5000,
-				isClosable: true,
-				position: "bottom",
-			});
-			setLoading(false);
-			navigate("/dashboard");
+			console.log(response);
+			if (response.status === 201) {
+				setUser(response.data._id);
+				setUserName(response.data.name);
+				setUserEmail(response.data.email);
+				console.log(response.data._id);
+				console.log(response.data.name);
+				localStorage.setItem("token", response.data.token);
+				toast({
+					title: "Login Successful",
+					status: "success",
+					duration: 5000,
+					isClosable: true,
+					position: "bottom",
+				});
+				setLoading(false);
+				navigate("/dashboard");
+			} else if (response.status === 401) {
+				// Handle unsuccessful login, show an error message
+				// console.log(JSON.stringify(data));
+				toast({
+					title: "Login Failed",
+					description: "Incorrect email or password",
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+					position: "bottom",
+				});
+				setLoading(false);
+			}
 		} catch (error) {
 			toast({
 				title: "Error Occured!",
@@ -87,7 +119,6 @@ const Register = () => {
 				borderRadius="10px"
 				bg="#f6f8fa" // Slightly transparent white
 				backdropFilter="blur(5px)" // Apply a blur effect for a glassy look
-				WebkitBackdropFilter="blur(5px)" // For cross-browser support
 			>
 				<Center>
 					<Stack spacing="4">
@@ -149,7 +180,14 @@ const Register = () => {
 											}}
 										/>
 									</FormControl>
-
+									<FormControl display="flex" alignItems="center" mt={2}>
+										<Checkbox
+											size="md"
+											isChecked={rememberMe}
+											onChange={() => setRememberMe(!rememberMe)}>
+											Remember me
+										</Checkbox>
+									</FormControl>
 									<Button
 										bg="#26528C"
 										color="white"
