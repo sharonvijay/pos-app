@@ -6,7 +6,7 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import planRoutes from "./routes/planRoutes.js";
-
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 const app = express();
 app.use(express.json());
 dotenv.config();
@@ -33,7 +33,8 @@ app.use(cors());
 app.use("/api/user", userRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/plan", planRoutes);
-
+app.use(notFound);
+app.use(errorHandler);
 app.get("/config", (req, res) => {
 	res.send({
 		publishableKey: process.env.STRIPE_PRIVATE_KEY,
