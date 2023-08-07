@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import axios from "axios";
-import { Box, Heading, Center, Text, Link } from "@chakra-ui/react";
+import { Box, Heading, Center, Text, Link, Checkbox } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
@@ -12,6 +12,7 @@ const Login = () => {
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
 	const [loading, setLoading] = useState(false);
+	const [rememberMe, setRememberMe] = useState(false);
 
 	const { setUser, setUserName, setUserEmail } = UserState();
 
@@ -55,6 +56,7 @@ const Login = () => {
 				setUserEmail(response.data.email);
 				console.log(response.data._id);
 				console.log(response.data.name);
+				localStorage.setItem("token", response.data.token);
 				toast({
 					title: "Login Successful",
 					status: "success",
@@ -157,6 +159,14 @@ const Login = () => {
 												setPassword(e.target.value);
 											}}
 										/>
+									</FormControl>
+									<FormControl display="flex" alignItems="center" mt={2}>
+										<Checkbox
+											size="md"
+											isChecked={rememberMe}
+											onChange={() => setRememberMe(!rememberMe)}>
+											Remember me
+										</Checkbox>
 									</FormControl>
 									<Button
 										bg="#26528C"
