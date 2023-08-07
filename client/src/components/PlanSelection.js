@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
 	Center,
@@ -13,6 +13,8 @@ import {
 	Td,
 } from "@chakra-ui/react";
 import { UserState } from "../context/UserProvider";
+import { useNavigate } from "react-router-dom";
+
 // import "./PlanSelection.css";
 const ToggleButtons = ({ leftLabel, rightLabel, selected, onChange }) => {
 	return (
@@ -91,7 +93,13 @@ const PlanSelection = () => {
 		setVideoQuality,
 		setResolution,
 	} = UserState();
-
+	const navigate = useNavigate();
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (!token) {
+			navigate("/");
+		}
+	}, [navigate]);
 	const handlePlanClick = (selectedPlan) => {
 		const clickedPlan = plansData.find((plan) => plan.name === selectedPlan);
 		if (clickedPlan) {
